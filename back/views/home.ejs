@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pagina com socket</title>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div>
+    <h1 style="background-color: aqua;">socket</h1>
+    <input type="text" id="message" width="250">
+    <button id="btnMessage">Enviar</button>
+
+    <ul id="messages" style="color: black;"></ul>
+
+  </div>
+
+  <script>
+    const socket = io();
+    
+    document.querySelector('#btnMessage').addEventListener('click', (e) => {
+      const message = document.querySelector('#message').value;
+      socket.emit('hello', message)  ;
+    });
+
+    socket.on('newMessage', (message) => {
+      const messageLi = document.createElement('li');
+      messageLi.innerHTML = message;
+      document.querySelector('#messages').appendChild(messageLi);
+    });
+
+  </script>
+</body>
+</html>
